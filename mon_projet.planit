@@ -1,0 +1,19 @@
+<project name="planit">
+	<tasks>
+		<task name="Une tache" id="une_tache" start="2004/01/29" end="2004/02/05">
+			<use-resource id="une_ressource" load="25%"/>
+			<task name="Une autre tache" id="une_tache.une_autre_tache" start="2004/01/30" end="2005/02/11">
+			</task>
+		</task>
+	</tasks>
+	<resources>
+		<resource name="Une ressource" id="une_ressource">
+			<use-timetable id="un_timetable"/>
+			<use-resource id=""/>
+		</resource>
+	</resources>
+	<timetables>
+		<timetable name="Un timetable" id="un_timetable">
+		</timetable>
+	</timetables>
+</project>

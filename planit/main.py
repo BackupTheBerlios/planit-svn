@@ -1,6 +1,7 @@
 # -*- coding: iso-8859-1 -*-
 
 import sys
+import os.path
 import logging.config
 from optparse import OptionParser
 from planit.input import loader
@@ -9,8 +10,8 @@ from planit.system.core import Task
 from planit.system.core import Resource
 from planit.system.core import Timetable
 
-#logging.basicConfig()
-logging.config.fileConfig( "log.conf" )
+if os.path.isfile( "log.conf" ):
+	logging.config.fileConfig( "log.conf" )
 
 def start():
 	(options, args) = parse_command_line()

@@ -1,5 +1,5 @@
 import logging
-from time import strptime
+import time
 from xml.dom import Node
 from xml.dom.ext.reader.Sax import FromXmlFile
 from planit.system.core import Project
@@ -57,8 +57,8 @@ def loadTask( taskEL ):
 	start = taskEL.getAttribute( "start" )
 	end = taskEL.getAttribute( "end" )
 
-	start = strptime( start, "%Y/%m/%d" )
-	end = strptime( end, "%Y/%m/%d" )
+	start = time.strptime( start, "%Y/%m/%d" )
+	end = time.strptime( end, "%Y/%m/%d" )
 
 	task = Task( id, name, start, end )
 

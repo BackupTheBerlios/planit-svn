@@ -1,4 +1,5 @@
 import logging
+from time import strptime
 from xml.dom import Node
 from xml.dom.ext.reader.Sax import FromXmlFile
 from planit.system.core import Project
@@ -53,13 +54,27 @@ def loadTasks( tasksEL ):
 def loadTask( taskEL ):
 	id = taskEL.getAttribute( "id" )
 	name = taskEL.getAttribute( "name" )
+	start = taskEL.getAttribute( "start" )
+	end = taskEL.getAttribute( "end" )
 
-	task = Task( id, name )
+	start = strptime( start, "%Y/%m/%d" )
+	end = strptime( end, "%Y/%m/%d" )
+
+	task = Task( id, name, start, end )
 
 	for childTaskEL in getElementsByTagName( taskEL, "task" ):
 		childTask = loadTask( childTaskEL )
 		if childTask is not None:
 			task.addTask( childTask )
+
+	for resourceEL in getElementsByTagName( taskEL, "use-resource" ):
+		id = resourceEL.getAttribute( "id" )
+		if resourceEL.hasAttribute( "load" ):
+			load = resourceEL.getAttribute( "load" )
+			load =  int( load[:-1] )
+		else:
+			load = 100
+		task.addResourceUsed( id, load )
 
 	return task
 
@@ -83,6 +98,19 @@ def loadResource( resourceEL ):
 		childResource = loadResource( childResourceEL )
 		if childResource is not None:
 			resource.addResource( childResource )
+
+	for timetableEL in getElementsByTagName( resourceEL, "use-timetable" ):
+		id = timetableEL.getAttribute( "id" )
+		resource.addTimetableUsed( id )
+
+	for resourceEL in getElementsByTagName( resourceEL, "use-resource" ):
+		id = resourceEL.getAttribute( "id" )
+		if resourceEL.hasAttribute( "load" ):
+			load = resourceEL.getAttribute( "load" )
+			load =  int( load[:-1] )
+		else:
+			load = 100
+		resource.addResourceUsed( id, load )
 
 	return resource
 

@@ -17,13 +17,8 @@ def start():
 
 	project = loader.load( args[0], options.inputFormat )
 
-	Project( "planit" )
-	Task( "Documentation" )
-	Resource( "Jean-François" )
-	Timetable( "Emploi du temps commun" )
-
 def parse_command_line():
-	usage = "usage: %prog [options] inputFilename [outputFilename]"
+	usage = "usage: %prog [options] inputFilename outputFilename"
 	version = "%prog 0.1"
 	parser = OptionParser( usage=usage, version=version )
 	parser.add_option( "-i", "--input", dest="inputFormat", type="string", default="planit",  

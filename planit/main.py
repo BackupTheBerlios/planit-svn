@@ -36,4 +36,5 @@ def parse_command_line():
 
 	return (options, args)
 
-start()
+if (__name__ == '__main__'):
+	start()
